@@ -1,5 +1,6 @@
-import { FlickrFeedService } from './../service/flickr-feed.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FlickrFeedService } from './../service/flickr-feed.service';
 
 @Component({
   selector: 'app-feed-list',
@@ -9,16 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class FeedListComponent implements OnInit {
 
   public imgList = [];
-  public errorMsg;
+  // public errorMsg;
 
   constructor(private _flickrFeedService: FlickrFeedService) { }
 
   ngOnInit() {
     this._flickrFeedService.getFlickrFeed()
-      .subscribe(data => this.imgList = data,
-                 error => this.errorMsg = error);
+      .subscribe(data => {
+        this.imgList = data['items'];
+        console.log(this.imgList);
+      });
 
-    console.log(this.imgList);
+    
   }
 
 
