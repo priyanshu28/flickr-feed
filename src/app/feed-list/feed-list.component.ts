@@ -1,6 +1,9 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FlickrFeedService } from './../service/flickr-feed.service';
+import { map, catchError, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-feed-list',
@@ -9,11 +12,12 @@ import { FlickrFeedService } from './../service/flickr-feed.service';
 })
 export class FeedListComponent implements OnInit {
 
-  private imgList: [];
+  private imgList: Observable<SearchItem[]>;
 
   // public imgList = [];
   // public errorMsg;
-
+  searchTerm: string;
+  private searchField: FormControl;
   constructor(private _flickrFeedService: FlickrFeedService) { }
 
   ngOnInit() {
@@ -23,9 +27,18 @@ export class FeedListComponent implements OnInit {
         console.log(this.imgList);
       });
 
-    
+      this.searchField = new FormControl();
+      this.imgList = this.searchField.valueChanges.pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        switchMap(term => this._flickrFeedService.searchTag(term))
+      );
   }
 
+  // onSubmit(value: string) {
+  //   // code
+  //   this._flickrFeedService.searchTag(value);
+  // }
 
 
 }

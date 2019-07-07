@@ -1,10 +1,13 @@
-<p>
-  feed-list works!
-</p>
-<h3>{{errorMsg}}</h3>
+<form (ngSubmit)="onSubmit(searchTerm)">
+  feed-list works!: <input type="text" name="search" [(ngModel)]="searchTerm">
+  <button type="submit">Search</button>
+</form>
+<input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
+<h3>{{filter}}</h3>
 <ul>
   <li *ngFor="let img of imgList">
-    {{img.media.m}}
+    <hr>
     <img [src]="img.media.m" alt="">
+    <p>Tags: {{img.tags}}</p>
   </li>
 </ul>

@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IFeed } from '../model/feed';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
+class SearchItem {
+  constructor(
+    public media: string,
+    public tags: string
+  ) { }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,29 +23,27 @@ export class FlickrFeedService {
 
 
   getFlickrFeed() {
-
-    return this.http.jsonp(this.flickrFeedUrl, 'JSONP_CALLBACK').pipe(
+    return this.http.jsonp(this.flickrFeedUrl, 'callback').pipe(
       tap(
         data => data['items']
       )
     );
   }
-  // getFlickrFeed():Observable<any> {   
-  //   return this.http.jsonp(this.flickrFeedUrl, 'callback').pipe(
-  //       map((res) => {
-  //         console.log(res);
-  //         return res;
-  //       })
-  //     );
-  // }
 
-  // getFlickrFeed():Observable<any> {   
-  //   return this.http.jsonp(this.flickrFeedUrl+'&callback=JSONP_CALLBACK', 'callback')
-  //     .pipe(
-  //       map((res: string) => {
-  //         console.log(res);
-  //         res;
-  //       })
-  //     );
-  // }
+  searchTag(value: string) {
+    console.log(this.flickrFeedUrl + '&tags=' + value);
+    return this.http.jsonp(this.flickrFeedUrl + '&tags=' + value, 'callback').pipe(
+      map(data => {
+        return data.imgList.map(item => {
+          return new SearchItem(
+            item.media.m,
+            item.artistName
+          );
+        });
+      })
+      // tap(
+      //   data => data['items']
+      // )
+    );
+  }
 }
