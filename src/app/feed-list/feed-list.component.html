@@ -4,10 +4,10 @@
 </form>
 <input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
 <h3>{{filter}}</h3>
-<ul>
-  <li *ngFor="let img of imgList">
-    <hr>
-    <img [src]="img.media.m" alt="">
-    <p>Tags: {{img.tags}}</p>
+<ul class="img-grid">
+  <li *ngFor="let img of imgList" [style.backgroundImage]="'url('+ img.media.m +')'">
+    <!-- <hr> -->
+    <!-- <img [src]="img.media.m" alt=""> -->
+    <!-- <p>Tags: {{img.tags}}</p> -->
   </li>
 </ul>

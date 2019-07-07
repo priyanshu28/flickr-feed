@@ -1,0 +1,15 @@
+.img-grid {
+    list-style: none;
+    display   : flex;
+    flex-wrap : wrap;
+
+    li {
+        margin     : 2px;
+        line-height: 0;
+        width: 155px;
+        height: 155px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}

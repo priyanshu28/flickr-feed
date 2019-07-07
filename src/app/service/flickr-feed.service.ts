@@ -17,33 +17,24 @@ class SearchItem {
 export class FlickrFeedService {
 
   private flickrFeedUrl: string = 'https://api.flickr.com/services/feeds/photos_public.gne?&format=json&jsoncallback=JSONP_CALLBACK';
-  // private flickrFeedUrl: string = 'https://api.flickr.com/services/feeds/photos_public.gne?&jsoncallback=?';
 
   constructor(private http: HttpClient) { }
 
 
   getFlickrFeed() {
-    return this.http.jsonp(this.flickrFeedUrl, 'callback').pipe(
+    return this.http.jsonp(this.flickrFeedUrl, 'JSONP_CALLBACK').pipe(
       tap(
         data => data['items']
       )
     );
   }
 
-  searchTag(value: string) {
-    console.log(this.flickrFeedUrl + '&tags=' + value);
-    return this.http.jsonp(this.flickrFeedUrl + '&tags=' + value, 'callback').pipe(
-      map(data => {
-        return data.imgList.map(item => {
-          return new SearchItem(
-            item.media.m,
-            item.artistName
-          );
-        });
-      })
-      // tap(
-      //   data => data['items']
-      // )
+  searchTag(tag_name) {
+    // let flickrFeedUrl = `https://api.flickr.com/services/feeds/photos_public.gne?&tags=${tag_name}&format=json&jsoncallback=JSONP_CALLBACK`;
+    return this.http.jsonp(this.flickrFeedUrl+'&tags='+ tag_name, 'JSONP_CALLBACK').pipe(
+      tap(
+        data => data
+      )
     );
   }
 }

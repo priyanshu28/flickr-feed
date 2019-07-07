@@ -12,10 +12,8 @@ import { map, catchError, tap, debounceTime, distinctUntilChanged, switchMap } f
 })
 export class FeedListComponent implements OnInit {
 
-  private imgList: Observable<SearchItem[]>;
+  private imgList: null;
 
-  // public imgList = [];
-  // public errorMsg;
   searchTerm: string;
   private searchField: FormControl;
   constructor(private _flickrFeedService: FlickrFeedService) { }
@@ -27,18 +25,23 @@ export class FeedListComponent implements OnInit {
         console.log(this.imgList);
       });
 
-      this.searchField = new FormControl();
-      this.imgList = this.searchField.valueChanges.pipe(
-        debounceTime(400),
-        distinctUntilChanged(),
-        switchMap(term => this._flickrFeedService.searchTag(term))
-      );
+    this.searchField = new FormControl();
+    this.searchField.valueChanges.subscribe(
+      (selectedValue) => {
+        this._flickrFeedService.searchTag(selectedValue).subscribe(data => {
+          this.imgList = data['items'];
+          console.log(this.imgList);
+        });
+      }
+    );
   }
 
-  // onSubmit(value: string) {
-  //   // code
-  //   this._flickrFeedService.searchTag(value);
-  // }
+  onSubmit(value: string) {
+    this._flickrFeedService.searchTag(value).subscribe(data => {
+      this.imgList = data['items'];
+      console.log(this.imgList);
+    });
+  }
 
 
 }
