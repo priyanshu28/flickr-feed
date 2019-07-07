@@ -16,8 +16,7 @@ export class FlickrFeedService {
 
 
   getFlickrFeed() {
-    // console.log(this.flickrFeedUrl);
-    // return this.http.get(this.flickrFeedUrl);
+
     return this.http.jsonp(this.flickrFeedUrl, 'JSONP_CALLBACK').pipe(
       tap(
         data => data['items']
