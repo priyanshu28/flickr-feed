@@ -9,7 +9,9 @@ import { FlickrFeedService } from './../service/flickr-feed.service';
 })
 export class FeedListComponent implements OnInit {
 
-  public imgList = [];
+  private imgList: [];
+
+  // public imgList = [];
   // public errorMsg;
 
   constructor(private _flickrFeedService: FlickrFeedService) { }

@@ -4,6 +4,7 @@
 <h3>{{errorMsg}}</h3>
 <ul>
   <li *ngFor="let img of imgList">
-    <img [src]="img.url" alt="">
+    {{img.media.m}}
+    <img [src]="img.media.m" alt="">
   </li>
 </ul>
