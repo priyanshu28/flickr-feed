@@ -1,13 +1,9 @@
-<form (ngSubmit)="onSubmit(searchTerm)">
-  feed-list works!: <input type="text" name="search" [(ngModel)]="searchTerm">
-  <button type="submit">Search</button>
+<form class="search-form" (ngSubmit)="onSubmit(searchTerm)">
+  <input type="text" placeholder="Search by tags" name="search" class="form-control" [(ngModel)]="searchTerm">
+  <button class="btn" type="submit"><img class="search-icon" src="assets/images/search-icon.png" alt=""></button>
 </form>
-<input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
-<h3>{{filter}}</h3>
+<!-- <input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField"> -->
 <ul class="img-grid">
   <li *ngFor="let img of imgList" [style.backgroundImage]="'url('+ img.media.m +')'">
-    <!-- <hr> -->
-    <!-- <img [src]="img.media.m" alt=""> -->
-    <!-- <p>Tags: {{img.tags}}</p> -->
   </li>
 </ul>

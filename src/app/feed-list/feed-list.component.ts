@@ -13,33 +13,31 @@ import { map, catchError, tap, debounceTime, distinctUntilChanged, switchMap } f
 export class FeedListComponent implements OnInit {
 
   private imgList: null;
-
   searchTerm: string;
-  private searchField: FormControl;
+
+  // private searchField: FormControl;
   constructor(private _flickrFeedService: FlickrFeedService) { }
 
   ngOnInit() {
     this._flickrFeedService.getFlickrFeed()
       .subscribe(data => {
         this.imgList = data['items'];
-        console.log(this.imgList);
       });
 
-    this.searchField = new FormControl();
-    this.searchField.valueChanges.subscribe(
-      (selectedValue) => {
-        this._flickrFeedService.searchTag(selectedValue).subscribe(data => {
-          this.imgList = data['items'];
-          console.log(this.imgList);
-        });
-      }
-    );
+    // this.searchField = new FormControl();
+    // this.searchField.valueChanges.subscribe(
+    //   (selectedValue) => {
+    //     this._flickrFeedService.searchTag(selectedValue).subscribe(data => {
+    //       this.imgList = data['items'];
+    //       console.log(this.imgList);
+    //     });
+    //   }
+    // );
   }
 
   onSubmit(value: string) {
     this._flickrFeedService.searchTag(value).subscribe(data => {
       this.imgList = data['items'];
-      console.log(this.imgList);
     });
   }
 
