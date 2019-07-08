@@ -1,8 +1,6 @@
-import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FlickrFeedService } from './../service/flickr-feed.service';
-import { map, catchError, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +13,6 @@ export class FeedListComponent implements OnInit {
   private imgList: null;
   searchTerm: string;
 
-  // private searchField: FormControl;
   constructor(private _flickrFeedService: FlickrFeedService) { }
 
   ngOnInit() {
@@ -23,16 +20,6 @@ export class FeedListComponent implements OnInit {
       .subscribe(data => {
         this.imgList = data['items'];
       });
-
-    // this.searchField = new FormControl();
-    // this.searchField.valueChanges.subscribe(
-    //   (selectedValue) => {
-    //     this._flickrFeedService.searchTag(selectedValue).subscribe(data => {
-    //       this.imgList = data['items'];
-    //       console.log(this.imgList);
-    //     });
-    //   }
-    // );
   }
 
   onSubmit(value: string) {
