@@ -18,13 +18,13 @@ export class FeedListComponent implements OnInit {
   ngOnInit() {
     this._flickrFeedService.getFlickrFeed()
       .subscribe(data => {
-        this.imgList = data['items'];
+        this.imgList = data;
       });
   }
 
   onSubmit(value: string) {
     this._flickrFeedService.searchTag(value).subscribe(data => {
-      this.imgList = data['items'];
+      this.imgList = data;
     });
   }
 

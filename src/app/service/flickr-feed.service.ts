@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class FlickrFeedService {
 
   getFlickrFeed() {
     return this.http.jsonp(this.flickrFeedUrl, 'JSONP_CALLBACK').pipe(
-      tap(
+      map(
         data => data['items']
       ),
       catchError(err => {
@@ -27,8 +27,8 @@ export class FlickrFeedService {
 
   searchTag(tag_name) {
     return this.http.jsonp(this.flickrFeedUrl + '&tags=' + tag_name, 'JSONP_CALLBACK').pipe(
-      tap(
-        data => data
+      map(
+        data => data['items']
       ),
       catchError(err => {
         console.error(err.message);
